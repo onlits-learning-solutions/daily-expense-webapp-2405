@@ -1,1 +1,3 @@
-# daily-expense-webapp-2405
+# Daily Expenses Web Module
+
+This is the web module of the project Daily Expense.
