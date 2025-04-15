@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Daily Expense</h1>
+    </header>
+    <main>
+        <h2>Signin</h2>
+        <form action="" method="post" id="signin" class="form-1" enctype="application/x-www-form-urlencoded">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required>
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required>
+            <button>Submit</button>
+        </form>
+    </main>
+    <footer></footer>
+    <script>
+        const signin = document.getElementById('signin');
+        const email = document.getElementById('email');
+        const password = document.getElementById('password');
+        signin.onsubmit = function () {
+            const fetchPromise = fetch("http://localhost:3000/users/authenticate", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    'email': email.value,
+                    'password': password.value
+                }),
+            });
+            fetchPromise.then((response) => {
+                if (response.status === 200) {
+                    alert("Signin successful");
+                    window.location.href = "dashboard.html";
+                } else {
+                    alert("Signin failed");
+                }
+            });
+            fetchPromise.catch((error) => {
+                console.error('Error:', error);
+                alert("An error occurred during signin");
+            });
+        }
+    </script>
+</body>
+</html>
