@@ -32,6 +32,7 @@
         const email = document.getElementById('email');
         const password = document.getElementById('password');
         signup.onsubmit = function () {
+            event.preventDefault(); // Prevent the default form submission
             const fetchPromise = fetch("http://localhost:3000/users", {
                 method: "POST",
                 headers: {
