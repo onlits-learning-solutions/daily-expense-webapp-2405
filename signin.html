@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login</title>
     <link rel="stylesheet" href="style.css">
+    </style>
 </head>
+
 <body>
     <header>
         <h1>Daily Expense</h1>
@@ -21,12 +24,14 @@
         </form>
     </main>
     <footer></footer>
+
     <script>
         const signin = document.getElementById('signin');
         const email = document.getElementById('email');
         const password = document.getElementById('password');
         signin.onsubmit = function () {
-            const fetchPromise = fetch("http://localhost:3000/users/authenticate", {
+            event.preventDefault(); // Prevent the default form submission
+            const fetchPromise = fetch("http://localhost:3000/users/authenticate/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -36,19 +41,26 @@
                     'password': password.value
                 }),
             });
+
             fetchPromise.then((response) => {
-                if (response.status === 200) {
-                    alert("Signin successful");
+                if (response.status === 401) {
+                    alert("Invalid email or password");
+                    return;
+                }
+                alert(response.status + " Login successful");
+                if (response.ok) {
+                    alert("Login successful");
                     window.location.href = "dashboard.html";
                 } else {
-                    alert("Signin failed");
+                    alert("Login failed");
                 }
-            });
-            fetchPromise.catch((error) => {
-                console.error('Error:', error);
-                alert("An error occurred during signin");
+                return response.json();
+
+
+
             });
         }
     </script>
 </body>
+
 </html>
